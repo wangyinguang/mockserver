@@ -14,7 +14,7 @@ class API(models.Model):
 class Router(models.Model):
     name = models.CharField(max_length = 32,verbose_name = '路由名称')    # 路由名称,用于显示
     path = models.CharField(max_length = 128,verbose_name = '路由路径')   # 路由路径,如果对应的API.path是uLink,router.path为register,那么地址为http://localhost/uLink/register
-    api = models.ForeignKey(API,verbose_name = '路由服务器')               # 隶属的API
+    api = models.ForeignKey(API,verbose_name = '路由服务器',on_delete=models.CASCADE)               # 隶属的API
     def __unicode__(self):
         return self.api.name + '->'+ self.name
 
@@ -23,7 +23,7 @@ class Response(models.Model):
     name = models.CharField(max_length = 32,verbose_name = '响应名称')    # Response名称,用于显示
     json = models.TextField()    # 返回的json内容
     delay = models.IntegerField(verbose_name = '响应延迟')               # 服务器延迟多久返回
-    router = models.ForeignKey(Router,verbose_name = '响应路由')     # 隶属的路由
+    router = models.ForeignKey(Router,verbose_name = '响应路由',on_delete=models.CASCADE)     # 隶属的路由
     def __unicode__(self):
         r = self.router
         a = r.api
